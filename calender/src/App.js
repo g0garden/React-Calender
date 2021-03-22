@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import CalForm from "./CalForm";
+import React  from 'react';
+import ReactDOM from 'react-dom';
+import CalHeader from "./CalHeader";
+import { Component } from 'react';
 
 class App extends Component {
   constructor(props){
@@ -12,7 +14,7 @@ class App extends Component {
     return (
       <div className="Container">
         <div className="Calender">
-          <CalForm/>
+          <CalHeader/>
         </div> 
         <div className="Upcoming">
           Upcoming projects
