@@ -15,14 +15,17 @@ class App extends Component {
 
   render() {
     return (
-        <div className="Container">
+        <Main className="Container">
           <div className="Calender">
             <CalBody/>
           </div>
-        </div>
+        </Main>
     );
   }
 }
 
-
 export default App;
+
+const Main = styled.div`
+  background: #d9d9d9;
+`;
