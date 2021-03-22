@@ -1,7 +1,10 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
-import CalHeader from "./CalHeader";
 import { Component } from 'react';
+import styled from "styled-components";
+
+import CalBody from './CalBody';
+import CalHeader from './CalHeader';
 
 class App extends Component {
   constructor(props){
@@ -12,16 +15,20 @@ class App extends Component {
 
   render() {
     return (
-      <div className="Container">
-        <div className="Calender">
-          <CalHeader/>
-        </div> 
-        <div className="Upcoming">
-          Upcoming projects
+        <div className="Container">
+          <div className="Calender">
+            <CalHeader/>
+            <CalBody/>
+          </div>
+          <div className="Upcoming">
+            {/* <Upcoming/> */}
+          </div>
         </div>
-      </div>
     );
   }
 }
+
+
+
 
 export default App;
