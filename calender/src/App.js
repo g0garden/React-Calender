@@ -4,7 +4,7 @@ import { Component } from 'react';
 import styled from "styled-components";
 
 import CalBody from './CalBody';
-import CalHeader from './CalHeader';
+//import CalHeader from './CalHeader';
 
 class App extends Component {
   constructor(props){
@@ -17,18 +17,12 @@ class App extends Component {
     return (
         <div className="Container">
           <div className="Calender">
-            <CalHeader/>
             <CalBody/>
-          </div>
-          <div className="Upcoming">
-            {/* <Upcoming/> */}
           </div>
         </div>
     );
   }
 }
-
-
 
 
 export default App;

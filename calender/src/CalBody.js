@@ -1,13 +1,18 @@
 import './App.css';
 import {useState} from 'react';
 import moment from 'moment';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
-const CalBody =()=>{
+
+const CalBody =(props)=>{
 
     const [getMoment, setMoment]=useState(moment());
     const today = getMoment; //today == moment()
 
+    //1년 중 이번주
     const firstWeek = today.clone().startOf('month').week(); //그 달의 시작하는 주
     const lastWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week(); //끝주
     //1년은 52주가 존재하고 며칠이 더 있다, 이 부분을 달력은 53주로써 표현해야 하지만 moment()는 내년의 첫 주인 1로 표시하기 때문에 
@@ -19,48 +24,74 @@ const CalBody =()=>{
         let week = firstWeek;
         for ( week; week <= lastWeek; week++){
             
-            result = result.concat(
-            <tr key={week}> { Array(7).fill(0).map((data, index) => {
+        result = result.concat(
+        <TheDays key={week}> 
+            { 
+            Array(7).fill(0).map((data, index) => {
                 let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day'); //d로해도되지만 직관성
                 
-            //오늘이 달력 표기일과 같다 같으면 오늘이지
+            //오늘이 달력 표기일과 같으면 오늘이지
             if(moment().format('YYYYMMDD') === days.format('YYYYMMDD')){
-                return(
-                <td key={index} style={{color:'#FE1818'}} >
-                    <span>{days.format('D')}</span>
-                </td>
-                );        
+                return <TheDay day={days.format('D')} key={index} today={'yes'}/>
+                
+                
+            // 이번달 아니면 날짜만 보여주고
+            // day 컴포넌트 두개로 조건문을 분리
             }else if(days.format('MM') !== today.format('MM')){
-                return(
-                <td key={index} style={{color:'#D7D4D4'}} >
-                    <span>{days.format('D')}</span>
-                </td>
-                );
+                return <TheDay day={days.format('D')} key={index} notThisMonth={true}/>
+                
+            //오늘도 아니고 이번달인 날들
             }else{
-                return(
-                <td key={index}  >
-                    <span>{days.format('D')}</span>
-                </td>
-                );
-                }
-            })
-        }
-            </tr>
-            );
-            }   
-        return result;
-        }
+                return <TheDay day={days.format('D')} key={index} today={'no'}/>
+            }
+        })
+    }
+    </TheDays>
 
-    return (
-        <div>
-            <table>
-            <tbody>
-                {calendarArr()}
-            </tbody>
-            </table>
-        </div>
-    );
+    )
+}//for
+    return result;
 }
 
+//요일들
+return (
+    <CalWrap>
+        <MonthWrap>
+            <Month>{today.format('MM, YYYY')}</Month>  {/*월 영어로 바꿔주기*/}
+            {/* */}
+            <PrevBtn onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>
+                <i className="fas fa-chevron-left"/>
+            </PrevBtn> 
+            <NextBtn onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}>
+                <i className="fas fa-chevron-right"/>
+            </NextBtn >
+        </MonthWrap>
+        <DayWrap>
+            <Day>SUN</Day>
+            <Day>MON</Day>
+            <Day>TUE</Day>
+            <Day>WED</Day>
+            <Day>THU</Day>
+            <Day>FRI</Day>
+            <Day>SAT</Day>
+        </DayWrap>
+        <DateWrap>
+            {calendarArr()}
+        </DateWrap>
+        <BtnWrap>
+            <Btn className="complete-btn" title="완료">Complete</Btn>
+            <Btn onClick={()=>{
+                props.history.push("/todo");
+            }} title="추가">Add</Btn>
+        </BtnWrap>
+    </CalWrap>
+        
+    );
+};
+
+const NextBtn = styled.div`
+    baground-color: blue;
+`;
 
 export default CalBody;
+
