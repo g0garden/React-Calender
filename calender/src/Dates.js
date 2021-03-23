@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import ListView from './ListView';
 
 const Dates = (props) => { 
     let day = props.day;
@@ -18,6 +19,7 @@ const Dates = (props) => {
             
             }} >{day}
             </Yoil>
+            <ListView/>
         </Day>);
     } else {
         return (<Day>

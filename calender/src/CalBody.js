@@ -7,6 +7,7 @@ import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
 import Dates from "./Dates";
 
+
 const CalBody =(props)=>{
 
     const [getMoment, setMoment]=useState(moment());
@@ -80,9 +81,8 @@ return (
         </DateWrap>
         <BtnWrap>
             <Btn className="complete-btn" title="완료">Complete</Btn>
-            <Btn onClick={()=>{
-                props.history.push("/todo");
-            }} title="추가">Add</Btn>
+            <Btn onClick={() => {
+            props.history.push("/todo");}} title="추가">Add</Btn>
         </BtnWrap>
     </CalWrap>
         

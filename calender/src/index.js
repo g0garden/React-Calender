@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+//BrowserRouter는 웹브라우저가 가지고 있는 주소 관련 정보를 props로 넘겨준다
+import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-    <App />,
-  
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>,  
   document.getElementById('root')
 );
 
