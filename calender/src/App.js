@@ -1,49 +1,65 @@
 import React  from 'react';
-import ReactDOM from 'react-dom';
 import { Component } from 'react';
+
 import styled from "styled-components";
-//props.history 가져오려면 withRouter
 import { withRouter } from "react-router";
 import { Route, Switch } from "react-router-dom";
 
 import CalBody from './CalBody';
 import Todo from "./Todo";
 
+import {connect} from 'react-redux';
+import {loadTodo, createTodo} from './redux/modules/todo';
 
-//import CalHeader from './CalHeader';
+//스토어가 가진 상태값을 props로 받아오기 위한 함수
+const mapStateTopProps = (state) => ({
+  todo_list:state.todo.list,
+});
+
+//값을 변화시키기 위한 액션생성함수를 props로 받아오기 위한 함수
+const mapDispatchToProps = (dispatch) => ({
+  load: () => {
+    dispatch(loadTodo());
+  },
+  create: (new_todo) => {
+    dispatch(createTodo(new_todo));
+  }
+});
+
 
 class App extends Component {
   constructor(props){
     super(props);
-
-    this.state = {};
+    this.state = {}
   }
 
-  componentDidMount() {
-    
-  }
+  componentDidMount(){
 
-
+  };
 
   render() {
     return (
-        <Main className="Container">
-          <div className="Calender">
+      <Container>
+        <Main>
           <Switch>
             <Route 
             path="/"
             exact
             render={(props) => <CalBody history={this.props.history}/>}
             />
-            <Route path="/detail" component={Todo} />
+            <Route path="/todo" component={Todo} />
           </Switch>
-          </div>
         </Main>
+      </Container>
     );
   }
 }
 
-export default withRouter(App);
+export default connect(mapStateTopProps, mapDispatchToProps)(withRouter(App));
+
+const Container = styled.body`
+  background: #d9d9d9;
+`;
 
 const Main = styled.div`
   background: #d9d9d9;

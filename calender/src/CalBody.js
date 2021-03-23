@@ -5,6 +5,9 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
+//리덕스 훅을 사용해서 액션생성함수를 불러와서 스토어에 저장된 값을 사용
+import { useSelector, useDispatch} from 'react-redux';
+
 import Dates from "./Dates";
 
 
@@ -55,13 +58,17 @@ const CalBody =(props)=>{
 }
 
 //요일들
+const prev= '<'
+const next= '>'
 return (
     <CalWrap>
         <MonthWrap>
             <Month>{today.format('MM, YYYY')}</Month>  {/*월 영어로 바꿔주기*/}
-            <MonthBtn className="month_btn" icon={faChevronCircleLeft} onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>
+            <MonthBtn className="month_btn" onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>
+                {prev}
             </MonthBtn> 
-            <MonthBtn className="month_btn" icon={faChevronCircleRight} onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}>
+            <MonthBtn className="month_btn" onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}>
+                {next}
                 {/*<i className="fas fa-chevron-right"/>*/}
             </MonthBtn >
         </MonthWrap>

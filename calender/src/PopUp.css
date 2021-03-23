@@ -62,7 +62,7 @@
     font-size: 13px;
   }
   
-  .PopUp > section > footer button:nth-child(1) {
+  .PopUp > section > footer .check {
     position: relative;
     left: -4px;
     background-color: #da2727;

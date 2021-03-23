@@ -1,18 +1,27 @@
 import React from "react"; 
 import styled from 'styled-components';
+import {useSelector, useDispatch} from "react-redux";
+import { createTodo } from './redux/modules/todo';
 
 
 const Todo = (props) => { 
+
+    const dispatch = useDispatch();
+    const choiceDate = React.useRef(null);
+    const time = React.useRef(0);
+    const todo = React.useRef(null);
+
+    //const basicTodoList = useSelector((state) => state.todo.todos);
     
     return (
     
     <Container>
-        <h3>Upcoming Projects</h3>
-        <p>일정 추가</p>
+        <h3>Tell me what To-do</h3>
+        <p>일정 추가하기</p>
         <Time>
             <span>일시 </span>
-            <input type="date" />
-            <select>
+            <input type="date" id="todoDate" ref={choiceDate}/>
+            <select ref={time}>
                 <option value="0">오전 12:00</option>
                 <option value="1">오전 01:00</option>
                 <option value="2">오전 02:00</option>
@@ -41,15 +50,32 @@ const Todo = (props) => {
         </Time>
         <TodoBox>
             <span>할일</span>
-            <input type="text" placeholder="오늘의 할일은?"/>
+            <input type="text" ref={todo} placeholder="일정을 입력하세요"/>
         </TodoBox>
         <BtnBox>
             <button onClick={() => {
-            window.location.href = '/';
-            }}>등록</button>
-            <button className="cancel" onClick={() => {
-            window.location.href = '/';
-            }}>취소</button>
+              //각 칸을 비교하면 어떨까?
+              if(choiceDate.current.value === '' || todo.current.value === ''){
+                alert('빈칸을 채워주세요!')
+                return false
+              }
+
+              const new_date = choiceDate.current.value.split('-')
+              let new_todo = {
+                id: 0,
+                year: new_date[0],
+                month: new_date[1],
+                day: new_date[2],
+                time: Number(time.current.value),
+                text: todo.current.value,
+                done: false
+              };
+              dispatch(createTodo(new_todo));
+              props.history.push('/');
+            }} title="등록하기">Register</button>
+            <button className="cancel" title="등록취소" onClick={() => {
+              props.history.push('/');
+            }}>Cancel</button>
         </BtnBox>
     </Container>
     ); 

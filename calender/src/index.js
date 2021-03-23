@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//BrowserRouter는 웹브라우저가 가지고 있는 주소 관련 정보를 props로 넘겨준다
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//스토어(리덕스)와 컴포넌트에 주입해서 연결 provider
+import { Provider } from "react-redux";
+//연결할 스토어도 있어야지? 
+import store from "./redux/configStore";
 ReactDOM.render(
-  <BrowserRouter>
-    <App/>
-  </BrowserRouter>,  
+  <Provider store={store}>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>  
+  </Provider>,
   document.getElementById('root')
 );
 
