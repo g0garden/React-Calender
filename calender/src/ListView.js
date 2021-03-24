@@ -1,4 +1,4 @@
-//모달창
+//모달창의 부모
 import React, { useState } from 'react';
 import styled from "styled-components";
 import PopUp from './PopUp';

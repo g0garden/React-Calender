@@ -15,7 +15,7 @@ import Dates from "./Dates.js";
 
 const CalBody =(props)=>{
 
-    const [getMoment, setMoment]=useState(moment());
+    const [getMoment, setMoment]=useState(moment());//함수형 컴포넌트에서 state사용하기
     const today = getMoment; //today == moment()
 
     //1년 중 이번주

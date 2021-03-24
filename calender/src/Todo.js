@@ -18,11 +18,12 @@ const Todo = (props) => {
     return (
     
     <Container>
-        <h3>Tell me what To-do</h3>
+        <h3>Tell me what To-do!</h3>
         <p>일정 추가하기</p>
+      
         <Time>
             <span>일시 </span>
-            {/*반드시*/}
+            {/*ref로 연월일은 받아옴*/}
             <input type="date" id="todoDate" ref={choiceDate}/> 
             <select ref={hour}>
             <option value="0">오전 12시</option>
@@ -64,6 +65,7 @@ const Todo = (props) => {
             <span>할일</span>
             <input type="text" ref={todo} placeholder="일정을 입력하세요"/>
         </TodoBox>
+      
         <BtnBox>
             <button onClick={() => {
               //각 칸을 비교하면 어떨까?
@@ -96,11 +98,16 @@ const Todo = (props) => {
 export default Todo;
 
 const Container = styled.div`
+  width: 747px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top:10px;
+  margin:200px auto;
+  border-radius: 35px;
+  background: #ffffff;
+  box-shadow:  18px 18px 36px #e3e3e3,
+              -18px -18px 36px #ffffff;
   & h3{
      font-family: "YESGothic-Bold";
      font-size:24px;
@@ -127,8 +134,11 @@ const Container = styled.div`
 `
 
 const Time = styled.div`
-    width:80%;
-    padding: 30px 0 25px 0;
+  width:80%;
+  padding: 30px 0 25px 0;
+  text-align: center;
+  
+  
   & span {
     font-size:18px;
     margin-right: 20px;
@@ -146,7 +156,7 @@ const Time = styled.div`
   
   }
   & select{
-    width:8%;
+    width:15%;
     padding: 3px 0;
     margin-left: 10px;
   }
@@ -169,9 +179,9 @@ const Time = styled.div`
 `
 
 const TodoBox = styled.div`
-  
+  text-align: center;
   width:80%;
-  margin-top:-5px;
+  margin-right:90px;
   
   & span{
     font-size:18px;

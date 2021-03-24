@@ -28,9 +28,10 @@
 }
 .modal > section > header {
   position: relative;
-  padding: 16px 64px 16px 16px;
+  padding: 16px 64px 16px 64px;
   background-color: #f1f1f1;
   font-weight: 700;
+  text-align: center;
 }
 
 .modal > section > header button {
@@ -42,6 +43,8 @@
   font-weight: 700;
   text-align: center;
   color: #999;
+  border: 1px solid rgb(32, 31, 31);
+  border-radius: 100%;
   background-color: transparent;
 }
 
@@ -49,6 +52,7 @@
 .modal > section > main {
   padding: 25px 16px;
   border-top: 1px solid #dee2e6;
+  text-align: center;
 }
 .modal > section > footer {
   padding: 12px 16px;

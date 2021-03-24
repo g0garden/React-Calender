@@ -1,3 +1,4 @@
+//모달창의 자식 - 실제 팝업창처럼 보여질 레이어
 import React from 'react';
 import './PopUp.css';
 import {useDispatch, useSelector} from "react-redux";
@@ -12,7 +13,7 @@ const PopUp = ( props ) => {
     const dispatch = useDispatch();
 
     return (
-        // 팝업이 열릴때 openPopUp popup클래스명이 생성된다.
+        // 팝업이 열릴때 'openModal modal클래스명'이 생성된다.
         <div className={open?'openModal modal':'modal'}>
             {open ? (
                 <section>
