@@ -1,21 +1,24 @@
+//모달창
 import React, { useState } from 'react';
 import styled from "styled-components";
 import PopUp from './PopUp';
 
 function ListView(props) {
     // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
-    const [ PopUpOpen, setPopUpOpen ] = useState(false);
-
+    const [ popupOpen, setPopUpOpen ] = useState(false);
+    
     const openPopUp = () => {
         setPopUpOpen(true);
     }
+
     const closePopUp = () => {
         setPopUpOpen(false);
     }
 
     const todo = props.todayTodos;
-    const date = todo.year + '.' + todo.month + '.' + todo.day + ' 일정';
+    const date = todo.year + '.' + todo.month + '.' + todo.day + '일정';
     const id = todo.id;
+    
     return (
       //DOM 구조에 반영되지 않는 React Fragment를 이용하여
       //부모 태그의 render를 생략할 수 있다. 
@@ -26,12 +29,12 @@ function ListView(props) {
             <Todo onClick={openPopUp}>{todo.text}
                 {todo.done && <span style={{fontWeight:'600',color:'#D82D2D',marginLeft:'4px'}}>✓</span>}
             </Todo>
-            <PopUp open={PopUpOpen} close={closePopUp} header={date} do={todo.done} id={id}>
-            {todo.time < 12 && <span>오전 </span>}
-            {todo.time>=12 && <span>오후 </span>}
-            {todo.time}:00  {todo.text}
-            {todo.done && <span style={{ fontWeight: '600', color: '#D82D2D', marginLeft: '4px' }}>✓</span>}
-        </PopUp>    
+            <PopUp open={popupOpen} close={closePopUp} header={date} do={todo.done} id={id}>
+                {todo.hour < 12 && <span>오전 </span>}
+                {todo.hour>=12 && <span>오후 </span>}
+                {todo.hour}:{todo.minute}  {todo.text}
+                {todo.done && <span style={{ fontWeight: '600', color: '#D82D2D', marginLeft: '4px' }}>✓</span>}
+            </PopUp>  
         </React.Fragment>
     )
 }

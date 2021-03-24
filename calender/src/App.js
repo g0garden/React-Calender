@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { withRouter } from "react-router";
 import { Route, Switch } from "react-router-dom";
 
-import CalBody from './CalBody';
-import Todo from "./Todo";
+import CalBody from './CalBody.js';
+import Todo from "./Todo.js";
 
 import {connect} from 'react-redux';
 import {loadTodo, createTodo} from './redux/modules/todo';
@@ -57,10 +57,11 @@ class App extends Component {
 
 export default connect(mapStateTopProps, mapDispatchToProps)(withRouter(App));
 
-const Container = styled.body`
-  background: #d9d9d9;
+const Container = styled.div`
+  background: #fcfcfc;
 `;
 
 const Main = styled.div`
-  background: #d9d9d9;
+  color:#280101;
+  background: #fcfcfc;
 `;

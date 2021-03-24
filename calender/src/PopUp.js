@@ -1,5 +1,5 @@
 import React from 'react';
-import './PopUp.css'
+import './PopUp.css';
 import {useDispatch, useSelector} from "react-redux";
 import {completeTodo, deleteTodo} from "./redux/modules/todo";
 
@@ -12,9 +12,9 @@ const PopUp = ( props ) => {
     const dispatch = useDispatch();
 
     return (
-        // 팝업이 열릴때 openPopUp 클래스가 생성된다.
-        <div className={open?'openPopUp popup':'popup'}>
-            {open? (
+        // 팝업이 열릴때 openPopUp popup클래스명이 생성된다.
+        <div className={open?'openModal modal':'modal'}>
+            {open ? (
                 <section>
                     <header>
                         {header}
@@ -24,10 +24,9 @@ const PopUp = ( props ) => {
                         {props.children}
                     </main>
                     <footer>
-                    {!props.do && <button className="check"> check </button> }
-                        <button id={id} onClick={() => {
-                            dispatch(deleteTodo(id));
-                        }}>delete</button>
+                        {!props.do && <button className="check" 
+                        onClick={() => {dispatch(completeTodo(id))}}>check</button>}
+                        <button id={id} onClick={() => {dispatch(deleteTodo(id));}}>delete</button>
                     </footer>
                 </section>
             ) : null}

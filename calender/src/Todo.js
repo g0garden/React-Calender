@@ -1,3 +1,4 @@
+//할일추가페이지
 import React from "react"; 
 import styled from 'styled-components';
 import {useSelector, useDispatch} from "react-redux";
@@ -8,7 +9,8 @@ const Todo = (props) => {
 
     const dispatch = useDispatch();
     const choiceDate = React.useRef(null);
-    const time = React.useRef(0);
+    const hour = React.useRef(null);
+    const minute = React.useRef(null);
     const todo = React.useRef(null);
 
     //const basicTodoList = useSelector((state) => state.todo.todos);
@@ -20,33 +22,43 @@ const Todo = (props) => {
         <p>일정 추가하기</p>
         <Time>
             <span>일시 </span>
-            <input type="date" id="todoDate" ref={choiceDate}/>
-            <select ref={time}>
-                <option value="0">오전 12:00</option>
-                <option value="1">오전 01:00</option>
-                <option value="2">오전 02:00</option>
-                <option value="3">오전 03:00</option>
-                <option value="4">오전 04:00</option>
-                <option value="5">오전 05:00</option>
-                <option value="6">오전 06:00</option>
-                <option value="7">오전 07:00</option>
-                <option value="8">오전 08:00</option>
-                <option value="9">오전 09:00</option>
-                <option value="10">오전 10:00</option>
-                <option value="11">오전 11:00</option>
-                <option value="12">오후 12:00</option>
-                <option value="13">오후 01:00</option>
-                <option value="14">오후 02:00</option>
-                <option value="15">오후 03:00</option>
-                <option value="16">오후 04:00</option>
-                <option value="17">오후 05:00</option>
-                <option value="18">오후 06:00</option>
-                <option value="19">오후 07:00</option>
-                <option value="20">오후 08:00</option>
-                <option value="21">오후 09:00</option>
-                <option value="22">오후 10:00</option>
-                <option value="23">오후 11:00</option>
-            </select>
+            {/*반드시*/}
+            <input type="date" id="todoDate" ref={choiceDate}/> 
+            <select ref={hour}>
+            <option value="0">오전 12시</option>
+            <option value="1">오전 1시</option>
+            <option value="2">오전 2시</option>
+            <option value="3">오전 3시</option>
+            <option value="4">오전 4시</option>
+            <option value="5">오전 5시</option>
+            <option value="6">오전 6시</option>
+            <option value="7">오전 7시</option>
+            <option value="8">오전 8시</option>
+            <option value="9">오전 9시</option>
+            <option value="10">오전 10시</option>
+            <option value="11">오전 11시</option>
+            <option value="12">오후 12시</option>
+            <option value="13">오후 1시</option>
+            <option value="14">오후 2시</option>
+            <option value="15">오후 3시</option>
+            <option value="16">오후 4시</option>
+            <option value="17">오후 5시</option>
+            <option value="18">오후 6시</option>
+            <option value="19">오후 7시</option>
+            <option value="20">오후 8시</option>
+            <option value="21">오후 9시</option>
+            <option value="22">오후 10시</option>
+            <option value="23">오후 11시</option>
+        </select>
+
+        <select ref={minute}>
+          <option value="00">00분</option>
+          <option value="10">10분</option>
+          <option value="20">20분</option>
+          <option value="30">30분</option>
+          <option value="40">40분</option>
+          <option value="50">50분</option>
+        </select>
         </Time>
         <TodoBox>
             <span>할일</span>
@@ -62,11 +74,12 @@ const Todo = (props) => {
 
               const new_date = choiceDate.current.value.split('-')
               let new_todo = {
-                id: 0,
+                id: 1,
                 year: new_date[0],
                 month: new_date[1],
                 day: new_date[2],
-                time: Number(time.current.value),
+                hour: hour.current.value,
+                minute: minute.current.value,
                 text: todo.current.value,
                 done: false
               };
@@ -83,7 +96,6 @@ const Todo = (props) => {
 export default Todo;
 
 const Container = styled.div`
-  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,12 +141,12 @@ const Time = styled.div`
     }
   }
   & input{
-    width:30%;
+    width:28%;
     padding: 1px;
   
   }
   & select{
-    width:15%;
+    width:8%;
     padding: 3px 0;
     margin-left: 10px;
   }
@@ -147,10 +159,10 @@ const Time = styled.div`
   @media (max-width:767px) {
     
     & input{
-      width:45%;
+      width:35%;
     }
     & select{
-      width:20%;
+      width:14%;
     }
     
   }
