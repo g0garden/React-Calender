@@ -9,15 +9,20 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import { useDispatch, useSelector} from "react-redux";
 //리덕스 훅을 사용해서 액션생성함수를 불러와서 스토어에 저장된 값을 사용
-
 import Dates from "./Dates.js";
 
 
 const CalBody =(props)=>{
 
+    const [btnChange, setBtnChange] = useState(false);//전체리스트
     const [getMoment, setMoment]=useState(moment());//함수형 컴포넌트에서 state사용하기
-    const today = getMoment; //today == moment()
+    
+    const changeList = () =>{
+        setBtnChange(!btnChange);
+    }
 
+
+    const today = getMoment; //today == moment()
     //1년 중 이번주
     const firstWeek = today.clone().startOf('month').week(); //그 달의 시작하는 주
     const lastWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week(); //끝주
@@ -27,6 +32,7 @@ const CalBody =(props)=>{
 
     //반복문을 사용하여 해당 달의 총주의 수만큼 반복문을 실행하고 테이블의 내용을 배열에 추가합니다. 
     const calendarArr=()=>{
+        
         let result = [];
         let week = firstWeek;
         for ( week; week <= lastWeek; week++){
@@ -39,17 +45,17 @@ const CalBody =(props)=>{
                 
             //오늘이 달력 표기일과 같으면 오늘이지
             if(moment().format('YYYYMMDD') === days.format('YYYYMMDD')){
-                return <Dates day={days.format('D')} key={index} today={'yes'} month={days.format('MM')} date={days.format('YYYY.MM.DD')}/>
+                return <Dates day={days.format('D')} key={index} today={'yes'} month={days.format('MM')} date={days.format('YYYY.MM.DD')} btnToggle={btnChange}/>
                 //Dates의 속성값들로 day,key(반복되는요소들은 고유값을 넣어준데 ),today..를 넘겨준다는 거??
                 
             // 이번달 아니면 날짜만 보여주고
             // day 컴포넌트 두개로 조건문을 분리
             }else if(days.format('MM') !== today.format('MM')){
-                return <Dates day={days.format('D')} key={index} notThisMonth={true} date={days.format('YYYY.MM.DD')}/>
+                return <Dates day={days.format('D')} key={index} notThisMonth={true} date={days.format('YYYY.MM.DD')} btnToggle={btnChange}/>
                 
             //오늘도 아니고 이번달인 날들
             }else{
-                return <Dates day={days.format('D')} key={index} today={'no'} month={days.format('MM')} date={days.format('YYYY.MM.DD')}/>
+                return <Dates day={days.format('D')} key={index} today={'no'} month={days.format('MM')} date={days.format('YYYY.MM.DD')} btnToggle={btnChange}/>
             }
         })
     }
@@ -72,11 +78,7 @@ return (
                 <FontAwesomeIcon icon={faChevronRight} size='1x' className="month-btn" onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}/>
             </MonthBtn>
         </MonthWrap>
-        <BtnWrap>
-            <Btn className="complete-btn" title="완료">Complete</Btn>
-            <Btn onClick={() => {
-            props.history.push("/todo");}} title="추가">+</Btn>
-        </BtnWrap>
+        
         </CalHead>
         <DayWrap>
             <DayofWeek>
@@ -92,6 +94,24 @@ return (
         <DateWrap>
             {calendarArr()}
         </DateWrap>
+        <BtnWrap>
+            <Btn className="complete-btn" title="완료" 
+            onClick={()=> {
+                //console.log(btnChange)
+                    if(btnChange === false){
+
+                        changeList();
+
+                    }else{
+                        changeList();
+                    }
+                }}> 
+                {btnChange === false ? "ok" : "all"}
+            </Btn>
+            <Btn onClick={() => {
+                props.history.push("/todo");
+                }} title="추가"> + </Btn>
+        </BtnWrap>
     </CalWrap>
         
     );
@@ -100,38 +120,45 @@ return (
 export default CalBody;
 
 const CalWrap = styled.div`
-    margin: 50px auto;
+    position :relative;
+    margin: 0 auto 50px auto;
     width: 60%;
-    padding: 70px;
-    border-radius: 62px;
-    background: #fcfcfc;
+    padding: 60px 30px 0px 30px;
+    border-radius: 45px;
+    border-radius: 50px;
+    background: #ffffff;
+    box-shadow:  20px 20px 60px #d9d9d9,
+                -20px -20px 60px #ffffff;
+
         
 `
 
 const CalHead = styled.div`
     display: flex;
     justify-content: space-between;
+    
 `;
 
 const MonthWrap = styled.div`
+    text-align:center;
     & .month_btn{
         cursor: pointer;
         transition: color .3s;
     }
     & .month_btn:hover{
-        color:#f5ef32;
+        color: #202b83;
     }
 `
 const Month = styled.span`
     font-family: 'Do Hyeon', sans-serif;
     margin: 10px 15px;
-    font-size: 30px;
-    color: #202b83;
+    font-size: 33px;
+    color:#202b83;
 `
 
 const MonthBtn = styled.span`
     size: 1px;
-    color: #202b83 ;
+    color:#202b83;
 `
 
 const DayWrap = styled.div`
@@ -148,10 +175,10 @@ const DayofWeek = styled.div`
     padding: 15px;
     
     & .sun{
-        color:#ec0e0e;
+        color:#fd5858;
     }
     & .sat{
-        color:#0e33ec;
+        color:#5874fd;
     }
     @media (max-width:767px) {
         font-size: 13px;
@@ -173,11 +200,15 @@ const TheDays = styled.div`
 `
 
 const BtnWrap = styled.div`
-
     display: flex;
-
+    justify-content: flex-end;
+    flex-direction: column;
+    position: absolute;
+    z-index:1500;
+    right: 25px;
+    bottom: 35px;
     text-align: center;
-    gap : 0px 10px;
+    gap : 15px 5px;
 
     @media (max-width:767px) {
     gap: 8px 0px;
@@ -191,21 +222,28 @@ const BtnWrap = styled.div`
 
 
     const Btn = styled.button`
-    width:60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
     outline: none;
     color: #202b83;
     font-size: 22px;
-    transition: background-color .3s;
     border-radius: 100%;
-    border: #202b83;
-    
+    cursor: pointer;
+    outline: none;
+    background: linear-gradient(145deg, #f2f5ff, #cbced6);
+    border:none;
+    transition: background-color .3s;
+    box-shadow:  10px 10px 20px #9ea0a7,
+                    -10px -10px 20px #ffffff;
 
     &.complete-btn{
-        width: 100px;
+        width: 50px;
         height:50px;
-        border-radius: 0;
+        border-radius: 52px;
+        background: linear-gradient(145deg, #f2f5ff, #cbced6);
+        box-shadow:  10px 10px 20px #9ea0a7,
+                    -10px -10px 20px #ffffff;
 
     }
     

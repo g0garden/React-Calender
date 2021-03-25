@@ -1,8 +1,8 @@
 //할일추가페이지
 import React from "react"; 
 import styled from 'styled-components';
-import {useSelector, useDispatch} from "react-redux";
-import { createTodo } from './redux/modules/todo';
+import { useDispatch } from "react-redux";
+import { createTodoFB } from './redux/modules/todo';
 
 
 const Todo = (props) => { 
@@ -69,14 +69,16 @@ const Todo = (props) => {
         <BtnBox>
             <button onClick={() => {
               //각 칸을 비교하면 어떨까?
-              if(choiceDate.current.value === '' || todo.current.value === ''){
-                alert('빈칸을 채워주세요!')
-                return false
+              if(choiceDate.current.value === ''){
+                alert('언제라구요..? 날짜를 선택해주세요! ') 
+                return false;               
+              }else if (todo.current.value === ''){
+                alert('어떤 일정이..? 일정을 입력해주세요!')
+                return false;
               }
-
+              
               const new_date = choiceDate.current.value.split('-')
               let new_todo = {
-                id: 1,
                 year: new_date[0],
                 month: new_date[1],
                 day: new_date[2],
@@ -85,8 +87,9 @@ const Todo = (props) => {
                 text: todo.current.value,
                 done: false
               };
-              dispatch(createTodo(new_todo));
-              props.history.push('/');
+              dispatch(createTodoFB(new_todo));
+              window.location.replace('/');
+              // props.history.push('/');
             }} title="등록하기">Register</button>
             <button className="cancel" title="등록취소" onClick={() => {
               props.history.push('/');

@@ -6,7 +6,6 @@ import ListView from './ListView'
 import { useDispatch, useSelector } from 'react-redux';
 
 
-
 const Dates = (props) => { 
     // 리스트 받아오기 
     //달과 요일을 받아서 전체리스트 가져와서 listView에 같이 주기
@@ -14,16 +13,23 @@ const Dates = (props) => {
     let notThisMonth = props.notThisMonth;
     let today = props.today;
     let date = props.date.split('.');
+    //const dispatch(loadTodoFB())
+    //dispatch(loadTodoFB())
     let todoList = useSelector(state => state.todo.todos); // 스토어에서 뽑아옴
-    
+    let btnToggle = props.btnToggle;
+
     let year = date[0];
     let month = date[1];
     let date_ = date[2];
     
-    //이 날의 todolist 스토어에서뽑아온 전체list중에서 아래 리턴 조건을 만족하는 일정만 달력에 보여지게 
-    const todayTodos = todoList.filter((todo) => {
-        return todo.year === year && todo.month === month && todo.day ===date_})
-    
+    //이 날의 todolist, 스토어에서뽑아온 전체list중에서 아래 리턴 조건을 만족하는 일정만 달력에 보여지게 
+    const todayTodos = (btnToggle === false? todoList.filter((todo) => {
+        return todo.year === year && todo.month === month && todo.day ===date_
+        }) : todoList.filter((todo) => {
+        return todo.year === year && todo.month === month && todo.day ===date_ && todo.done === true
+    }))
+        
+
     let arrListView;
     if(todayTodos) {
         //개수 오류 안나게 length 체크해서 시간순 sort 인자가 1개인데 정렬하면 오류
@@ -64,7 +70,7 @@ const Dates = (props) => {
 export default Dates;
 
 const Day = styled.div`
-    text-align:right;
+    text-align:left;
     width:30%;
     min-height: 90px;
     
@@ -76,5 +82,5 @@ const Yoil = styled.span`
     padding:3px;
     position: relative;
     top:5px;
-    font-family: "YESGothic-Bold";
+    font-family: 'Do Hyeon', sans-serif;
 `

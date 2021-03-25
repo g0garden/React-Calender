@@ -2,7 +2,7 @@
 import React from 'react';
 import './PopUp.css';
 import {useDispatch, useSelector} from "react-redux";
-import {completeTodo, deleteTodo} from "./redux/modules/todo";
+import { completeTodoFB, deleteTodoFB} from "./redux/modules/todo";
 
 
 const PopUp = ( props ) => {
@@ -26,8 +26,8 @@ const PopUp = ( props ) => {
                     </main>
                     <footer>
                         {!props.do && <button className="check" 
-                        onClick={() => {dispatch(completeTodo(id))}}>check</button>}
-                        <button id={id} onClick={() => {dispatch(deleteTodo(id));}}>delete</button>
+                        onClick={() => {dispatch(completeTodoFB(id))}}>check</button>}
+                        <button id={id} onClick={() => {dispatch(deleteTodoFB(id))}}>delete</button>
                     </footer>
                 </section>
             ) : null}
